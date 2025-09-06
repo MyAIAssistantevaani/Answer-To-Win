@@ -190,20 +190,30 @@ function checkAnswer(selected){
   current++; showQuestion();
 }
 
-function showResult(){
-  document.getElementById('quiz').innerHTML='';
-  document.getElementById('actions').style.display='none';
-  const resultDiv=document.getElementById('result');
-  resultDiv.classList.remove('hidden');
-  document.getElementById('scoreText').textContent=`${score}/${TOTAL_QUESTIONS}`;
-  const freebieMsg=document.getElementById('freebieMsg');
-  if(score===TOTAL_QUESTIONS) freebieMsg.classList.remove('hidden');
-  else freebieMsg.classList.add('hidden');
-  document.getElementById('actions').style.display='block';
-}
+function checkAnswer(selected){
+  const q = quizQuestions[current];
+  const quizDiv = document.getElementById('quiz');
+  
+  // Highlight selected answer
+  const buttons = quizDiv.querySelectorAll('button.option');
+  buttons.forEach((btn, idx) => {
+    btn.disabled = true; // disable all buttons after selection
+    if(idx === q.correct) btn.style.background = 'green'; // correct answer
+    else if(idx === selected) btn.style.background = 'red'; // wrong selection
+  });
 
+  // Update score
+  if(selected === q.correct) score++;
+
+  // Wait 1 second, then show next question
+  setTimeout(()=>{
+    current++;
+    showQuestion();
+  }, 1000);
+}
 document.getElementById('nextBtn').addEventListener('click',showQuestion);
 startQuiz();
 </script>
 </body>
 </html>
+
