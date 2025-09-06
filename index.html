@@ -211,9 +211,25 @@ function checkAnswer(selected){
     showQuestion();
   }, 1000);
 }
+  function showResult(){
+  document.getElementById('quiz').innerHTML=''; 
+  document.getElementById('actions').style.display='none';
+  
+  const resultDiv = document.getElementById('result');
+  resultDiv.classList.remove('hidden');
+  document.getElementById('scoreText').textContent = `${score}/${TOTAL_QUESTIONS}`;
+  
+  const freebieMsg = document.getElementById('freebieMsg');
+  if(score === TOTAL_QUESTIONS) {
+    freebieMsg.classList.remove('hidden'); // show form for perfect score
+  } else {
+    freebieMsg.classList.add('hidden'); 
+  }
+}
 document.getElementById('nextBtn').addEventListener('click',showQuestion);
 startQuiz();
 </script>
 </body>
 </html>
+
 
